@@ -21,7 +21,8 @@ namespace mTouchPDFReader.Library.Views.Core
 	public class PageContentView : UIView
 	{			
 		#region Fields
-		
+
+		/*
 		/// <summary>
 		/// Instruct that needed a CAGradientLayer (not the default CALayer) for the Layer property 
 		/// </summary>
@@ -30,6 +31,7 @@ namespace mTouchPDFReader.Library.Views.Core
 		{
 			return new Class(typeof(PageContentTile));
 		}
+		*/
 		
 		/// <summary>
 		/// Page number displayed in view
@@ -60,7 +62,7 @@ namespace mTouchPDFReader.Library.Views.Core
 			ContentMode = UIViewContentMode.Redraw;
 			AutoresizingMask = UIViewAutoresizing.None;
 			BackgroundColor = UIColor.Clear;
-			(Layer as PageContentTile).OnDraw = Draw;
+			//(Layer as PageContentTile).OnDraw = Draw;
 		}		
 		
 		/// <summary>
@@ -111,6 +113,16 @@ namespace mTouchPDFReader.Library.Views.Core
 				}
 			}
 			return pageRect;
+		}
+
+		/// <summary>
+		/// Draw the specified rect.
+		/// </summary>
+		public override void Draw (RectangleF rect)
+		{
+			base.Draw (rect);
+			var context = UIGraphics.GetCurrentContext();
+			Draw (context);
 		}
 		
 		/// <summary>

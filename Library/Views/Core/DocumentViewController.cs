@@ -634,12 +634,18 @@ namespace mTouchPDFReader.Library.Views.Core
 					PageView pageView = mPageViews.FirstOrDefault(v => v.PageNumber == i);
 					if (pageView == null) {
 						pageView = new PageView(viewRect, i);
+						pageView.ZoomScale = mCurrentPageView != null ? mCurrentPageView.ZoomScale : 1.0f;
+						pageView.ZoomingEnded += delegate(object sender, ZoomingEndedEventArgs e) {
+							foreach (var view in mPageViews) {
+								view.ZoomScale = e.AtScale;
+							}
+						};
 						mScrollView.AddSubview(pageView);
 						mPageViews.Add(pageView);
 					} else {
 						pageView.Frame = viewRect;
 						pageView.PageNumber = i;
-						pageView.ZoomReset();
+						//pageView.ZoomReset();
 						unusedPageViews.Remove(pageView);
 					}
 					viewRect = CalcFrameForNextPage(viewRect);
